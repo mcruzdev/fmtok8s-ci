@@ -1,5 +1,10 @@
 name: 'fmtok8s-ci'
 description: From Monolith to K8S Continuous Integration Action
+inputs:
+  default-branch:
+    description: 'Default branch'
+    required: true
+    default: 'main'
 runs:
   using: 'node16'
   main: 'dist/index.js'
