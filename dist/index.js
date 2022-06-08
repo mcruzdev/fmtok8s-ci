@@ -11966,7 +11966,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(4695)
 const github = __nccwpck_require__(9122)
-const { prerelease } = __nccwpck_require__(5298)
+const { valid, gt } = __nccwpck_require__(5298)
 
 var regex = new RegExp('(0|[1-9]\d*)+\.(0|[1-9]\d*)+\.(0|[1-9]\d*)+(-(([a-z-][\da-z-]+|[\da-z-]+[a-z-][\da-z-]*|0|[1-9]\d*)(\.([a-z-][\da-z-]+|[\da-z-]+[a-z-][\da-z-]*|0|[1-9]\d*))*))?(\\+([\da-z-]+(\.[\da-z-]+)*))?$')
 
@@ -11999,7 +11999,7 @@ function validateBranch() {
 
     console.log('[validateBranch]: branch ', branchName)
 
-    if (branchname !== defaultBranch) {
+    if (branchName !== defaultBranch) {
         core.setFailed('[validateBranch]: This action runs just on default branch')
     }
 }
@@ -12011,16 +12011,12 @@ async function getLatestTag() {
     const tags = await oktokit.rest.repos.listTags({
         repo: process.env.GITHUB_REPOSITORY,
         per_page: 100,
-        owner: github.context.repo.owner
+        owner: github.context.repo.owner,
     })
 
-    return tags.find((tag) => !prerelease(tag.name)) || {
-        name: "0.0.0",
-        commit: {
-            sha: "HEAD",
-        },
-    }
-
+    return tags.data.map(tag => tag.name).reduce((a, b) => {
+        return gt(a, b) ? a : b
+    })
 }
 
 async function main() {
