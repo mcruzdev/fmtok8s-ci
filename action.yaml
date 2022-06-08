@@ -3,8 +3,11 @@ description: From Monolith to K8S Continuous Integration Action
 inputs:
   default-branch:
     description: 'Default branch'
-    required: true
+    required: false
     default: 'main'
+  github_token:
+    description: 'Github token'
+    required: true
 runs:
   using: 'node16'
   main: 'dist/index.js'

@@ -7,8 +7,8 @@ var regex = new RegExp('(0|[1-9]\d*)+\.(0|[1-9]\d*)+\.(0|[1-9]\d*)+(-(([a-z-][\d
 const tagsPrefix = 'refs/tags/v'
 const headsPrefix = 'refs/heads/'
 const tagStart = 10
-const branchStart = 10
-const defaultBranch = core.getInput('default-branch')
+const branchStart = 11
+const defaultBranch = core.getInput('default_branch')
 
 function validateRef() {
     const { ref } = github.context
@@ -48,9 +48,11 @@ async function getLatestTag() {
         owner: github.context.repo.owner,
     })
 
-    return tags.data.map(tag => tag.name).reduce((a, b) => {
-        return gt(a, b) ? a : b
-    })
+    return tags.data
+        .filter(tag => valid(tag.name))
+        .reduce((a, b) => {
+            return gt(a, b) ? a : b
+        })
 }
 
 async function main() {
