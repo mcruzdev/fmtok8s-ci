@@ -11,4 +11,4 @@ async function setup() {
     }
 }
 
-module.exports = setup
+setup()
