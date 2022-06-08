@@ -8871,7 +8871,7 @@ const tagStart = 10
 function validateRef() {
     const { ref } = github.context
     if (!ref.startsWith(tagPrefix)) {
-        core.setFailed('[fmtok8s-ci-action]: This action accepts only tag')
+        core.setFailed('[validateRef]: This action accepts only tag')
     }
 }
 
@@ -8886,6 +8886,9 @@ function validateTag() {
 }
 
 async function main() {
+    const ctx = JSON.stringify(github.context)
+    console.log('ctx: ')
+    console.log(ctx)
     validateRef()
     validateTag()
 }
