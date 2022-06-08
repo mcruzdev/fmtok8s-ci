@@ -8865,15 +8865,33 @@ const github = __nccwpck_require__(9122)
 
 var regex = new RegExp('(0|[1-9]\d*)+\.(0|[1-9]\d*)+\.(0|[1-9]\d*)+(-(([a-z-][\da-z-]+|[\da-z-]+[a-z-][\da-z-]*|0|[1-9]\d*)(\.([a-z-][\da-z-]+|[\da-z-]+[a-z-][\da-z-]*|0|[1-9]\d*))*))?(\\+([\da-z-]+(\.[\da-z-]+)*))?$')
 
-async function setup() {
+const tagPrefix = 'refs/tags/v'
+const tagStart = 10
+
+function validateRef() {
     const { ref } = github.context
-    core.info(`ref: ${ref}`)
-    if (!regex.exec(ref)) {
-        core.setFailed('[fmtok8s-ci-action]: Invalid semver')
+    if (!ref.startsWith(tagPrefix)) {
+        core.setFailed('[fmtok8s-ci-action]: This action accepts only tag')
     }
 }
 
-setup()
+function validateTag() {
+    const { ref } = github.context
+    const tag = ref.substring(tagStart)
+    console.log('[validateTag]: tag ', tag)
+
+    if (!regex.exec(tag)) {
+        core.setFailed('[validateTag]: Invalid semver')
+    }
+}
+
+async function main() {
+    validateRef()
+    validateTag()
+}
+
+main()
+
 })();
 
 module.exports = __webpack_exports__;
