@@ -8868,7 +8868,7 @@ var regex = new RegExp('(0|[1-9]\d*)+\.(0|[1-9]\d*)+\.(0|[1-9]\d*)+(-(([a-z-][\d
 async function setup() {
     const { ref } = github.context
     core.info(`ref: ${ref}`)
-    if (!regex.exec(tag)) {
+    if (!regex.exec(ref)) {
         core.setFailed('[fmtok8s-ci-action]: Invalid semver')
     }
 }
