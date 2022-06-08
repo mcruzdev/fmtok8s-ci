@@ -40,11 +40,7 @@ function validateBranch() {
 
 async function getLatestTag() {
     const token = core.getInput('github_token')
-    const oktokit = github.getOctokit(token, {
-        auth: {
-            
-        }
-    })
+    const oktokit = github.getOctokit(token)
 
     const tags = await oktokit.rest.repos.listTags({
         repo: github.context.payload.repository.name,
