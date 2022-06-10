@@ -23,4 +23,27 @@ describe('Util', () => {
         // assert
         expect(tag).toBe('')
     })
+
+    test('Should return a branch from ref', () => {
+        // arrange
+        const util = new Util()
+
+        // act
+        const branch = util.extractBranch('refs/heads/feature')
+
+        // assert
+        expect(branch).toBe('feature')
+    })
+
+    test('Should return empty string when branch ref is not a branch ref', () => {
+        // arrange
+        const util = new Util()
+
+        // act
+        const tag = util.extractBranch('refs/tags/feature')
+
+
+        // assert
+        expect(tag).toBe('')
+    })
 })
