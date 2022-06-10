@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1654839676770" clover="3.2.0">
+  <project timestamp="1654839676770" name="All files">
+    <metrics statements="60" coveredstatements="50" conditionals="16" coveredconditionals="12" methods="18" coveredmethods="16" elements="94" coveredelements="78" complexity="0" loc="60" ncloc="60" packages="1" files="4" classes="4"/>
+    <file name="github-service.js" path="/home/ubuntu/workspace/labs/fmtok8s-ci/src/github-service.js">
+      <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <line num="3" count="4" type="stmt"/>
+      <line num="7" count="3" type="stmt"/>
+      <line num="8" count="3" type="stmt"/>
+      <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="18" count="1" type="stmt"/>
+      <line num="23" count="2" type="stmt"/>
+    </file>
+    <file name="main.js" path="/home/ubuntu/workspace/labs/fmtok8s-ci/src/main.js">
+      <metrics statements="39" coveredstatements="29" conditionals="8" coveredconditionals="6" methods="10" coveredmethods="8"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="5" count="5" type="stmt"/>
+      <line num="6" count="5" type="stmt"/>
+      <line num="7" count="5" type="stmt"/>
+      <line num="12" count="0" type="stmt"/>
+      <line num="13" count="0" type="stmt"/>
+      <line num="14" count="0" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+      <line num="17" count="0" type="stmt"/>
+      <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="19" count="0" type="stmt"/>
+      <line num="21" count="0" type="stmt"/>
+      <line num="26" count="2" type="stmt"/>
+      <line num="27" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="28" count="1" type="stmt"/>
+      <line num="29" count="1" type="stmt"/>
+      <line num="30" count="1" type="stmt"/>
+      <line num="36" count="3" type="stmt"/>
+      <line num="38" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="39" count="1" type="stmt"/>
+      <line num="40" count="1" type="stmt"/>
+      <line num="43" count="2" type="stmt"/>
+      <line num="50" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="51" count="1" type="stmt"/>
+      <line num="52" count="1" type="stmt"/>
+      <line num="55" count="1" type="stmt"/>
+      <line num="59" count="1" type="stmt"/>
+      <line num="60" count="1" type="stmt"/>
+      <line num="64" count="1" type="stmt"/>
+      <line num="65" count="1" type="stmt"/>
+      <line num="69" count="2" type="stmt"/>
+      <line num="70" count="2" type="stmt"/>
+      <line num="74" count="1" type="stmt"/>
+      <line num="75" count="1" type="stmt"/>
+      <line num="79" count="0" type="stmt"/>
+      <line num="80" count="0" type="stmt"/>
+      <line num="84" count="1" type="stmt"/>
+      <line num="85" count="1" type="stmt"/>
+      <line num="89" count="1" type="stmt"/>
+    </file>
+    <file name="semver.js" path="/home/ubuntu/workspace/labs/fmtok8s-ci/src/semver.js">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <line num="2" count="2" type="stmt"/>
+      <line num="8" count="5" type="stmt"/>
+      <line num="12" count="2" type="stmt"/>
+    </file>
+    <file name="util.js" path="/home/ubuntu/workspace/labs/fmtok8s-ci/src/util.js">
+      <metrics statements="11" coveredstatements="11" conditionals="6" coveredconditionals="4" methods="4" coveredmethods="4"/>
+      <line num="1" count="2" type="stmt"/>
+      <line num="3" count="2" type="stmt"/>
+      <line num="4" count="2" type="stmt"/>
+      <line num="10" count="5" type="cond" truecount="2" falsecount="0"/>
+      <line num="11" count="4" type="stmt"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="18" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="19" count="3" type="stmt"/>
+      <line num="21" count="1" type="stmt"/>
+      <line num="26" count="2" type="stmt"/>
+      <line num="30" count="2" type="stmt"/>
+    </file>
+  </project>
+</coverage>

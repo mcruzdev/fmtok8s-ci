@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage=true",
     "build": "ncc build src/index.js --license licenses.txt",
     "prepare": "husky install"
   },
