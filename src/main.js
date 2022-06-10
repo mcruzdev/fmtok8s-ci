@@ -8,11 +8,9 @@ class Main {
         this.githubService = githubService
     }
 
-    async exec({ ref, repo, owner, defaultBranch, commitId }) {
+    validateTag(tag) {
 
-        const tag = this.util.extractTag(ref)
-
-        if (tag && !this.semver.isValid(tag)) {
+        if (!this.semver.isValid(tag)) {
             core.setFailed('[fmtok8s:CI] Invalid Semver')
         }
 
@@ -25,6 +23,15 @@ class Main {
 
         if (!isFromDefaultBranch) {
             core.setFailed(`[fmtok8s:CI] You can create a tag only from ${defaultBranch}`)
+        }
+    }
+
+    async exec({ ref, repo, owner, defaultBranch, commitId }) {
+
+        const tag = this.util.extractTag(ref)
+
+        if (tag) {
+            this.validateTag()
         }
     }
 }
