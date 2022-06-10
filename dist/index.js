@@ -11795,6 +11795,115 @@ try {
 
 /***/ }),
 
+/***/ 9835:
+/***/ ((module) => {
+
+class GithubService {
+    constructor({ oktokit }) {
+        this.oktokit = oktokit
+    }
+
+    async commitIsFromDefaultBranch({ commitId, defaultBranch, owner, repo }) {
+        console.log(`[commitIsFromDefaultBranch]: commitId=${commitId}, defaultBranch=${defaultBranch}, owner=${owner}, repo=${repo}`)
+
+        try {
+            const response = await oktokit
+                .request(`GET /repos/{owner}/{repo}/compare/{base}...{head}`, {
+                    owner,
+                    repo,
+                    base: defaultBranch,
+                    head: commitId
+                })
+            return response.data.status === 'identical' || response.data.status === 'behind'
+        } catch (err) {
+            console.log('[commitIsFromDefaultBranch]: Error while requesting compare endpoint: ', err)
+            return false
+        }
+    }
+}
+
+module.exports = GithubService
+
+/***/ }),
+
+/***/ 2872:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(4695)
+const github = __nccwpck_require__(9122)
+
+class Main {
+    constructor({ semver, util, githubService }) {
+        this.semver = semver
+        this.util = util
+        this.githubService = githubService
+    }
+
+    async exec({ ref, repo, owner, defaultBranch, commitId }) {
+        
+        const tag = this.util.extractTag(ref)
+        const isValid = this.semver.isValid(tag)
+
+        if (!isValid) {
+            core.setFailed('[fmtok8s:CI] Invalid Semver')
+        }
+
+        const isFromDefaultBranch = await this.githubService.commitIsFromDefaultBranch({
+            commitId,
+            owner,
+            repo,
+            defaultBranch,
+        })
+
+        if (!isFromDefaultBranch) {
+            core.setFailed(`[fmtok8s:CI] You can create a tag only from ${defaultBranch}`)
+        }
+    }
+}
+
+module.exports = Main
+
+/***/ }),
+
+/***/ 452:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+
+const semver = __nccwpck_require__(5298)
+
+class Semver {
+    constructor() { }
+
+    isValid(tag) {
+        return !!semver.valid(tag)
+    }
+}
+
+module.exports = Semver
+
+/***/ }),
+
+/***/ 5291:
+/***/ ((module) => {
+
+const REF_TAG_PREFIX = 'refs/tags/'
+
+class Util {
+    constructor() { }
+
+    extractTag(ref = '') {
+        if (ref.startsWith(REF_TAG_PREFIX)) {
+            return ref.replace(REF_TAG_PREFIX, '')
+        } else {
+            return ''
+        }
+    }
+}
+
+module.exports = Util
+
+/***/ }),
+
 /***/ 1135:
 /***/ ((module) => {
 
@@ -11966,86 +12075,38 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(4695)
 const github = __nccwpck_require__(9122)
-const { valid, gt } = __nccwpck_require__(5298)
 
-var regex = new RegExp('(0|[1-9]\d*)+\.(0|[1-9]\d*)+\.(0|[1-9]\d*)+(-(([a-z-][\da-z-]+|[\da-z-]+[a-z-][\da-z-]*|0|[1-9]\d*)(\.([a-z-][\da-z-]+|[\da-z-]+[a-z-][\da-z-]*|0|[1-9]\d*))*))?(\\+([\da-z-]+(\.[\da-z-]+)*))?$')
+const Semver = __nccwpck_require__(452)
+const Util = __nccwpck_require__(5291)
+const Main = __nccwpck_require__(2872)
+const GithubService = __nccwpck_require__(9835)
 
-const tagsPrefix = 'refs/tags/v'
-const headsPrefix = 'refs/heads/'
-const tagStart = 10
-const branchStart = 11
-const defaultBranch = core.getInput('default_branch')
+async function init() {
 
-function validateRef() {
-    const { ref } = github.context
-    if (!ref.startsWith(tagsPrefix)) {
-        core.setFailed('[validateRef]: This action accepts only tag')
-    }
-}
-
-function validateTag() {
-    const { ref } = github.context
-    const tag = ref.substring(tagStart)
-    console.log('[validateTag]: tag ', tag)
-
-    if (!regex.exec(tag)) {
-        core.setFailed('[validateTag]: Invalid semver')
-    }
-}
-
-function validateBranch() {
-    const { ref } = github.context
-    const branchName = ref.substring(branchStart)
-
-    console.log('[validateBranch]: branch ', branchName)
-
-    if (branchName !== defaultBranch) {
-        core.setFailed('[validateBranch]: This action runs just on default branch')
-    }
-}
-
-function isTagValid(tag){
-    try {
-        valid(tag.name)
-        return true
-    } catch (err) {
-        return false
-    }
-}
-
-async function getLatestTag() {
+    // loads inputs
     const token = core.getInput('github_token')
+    const defaultBranch = core.getInput('default_branch')
+
+    // creates oktokit
     const oktokit = github.getOctokit(token)
 
-    const tags = await oktokit.rest.repos.listTags({
-        repo: github.context.payload.repository.name,
-        per_page: 100,
-        owner: github.context.repo.owner,
+    // constructs main
+    const main = new Main({
+        semver: new Semver(),
+        util: new Util(),
+        githubService: new GithubService({ oktokit })
     })
 
-    return tags.data
-        .filter(isTagValid)
-        .reduce((a, b) => {
-            return gt(a, b) ? a : b
-        })
+    await main.exec({
+        commitId: github.context.payload?.head_commit?.id,
+        defaultBranch,
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        ref: github.context.ref,
+    })
 }
 
-async function main() {
-
-    if (github.context.ref.startsWith(headsPrefix)) {
-        validateBranch()
-        const latest = await getLatestTag()
-        console.log('[main]: Latest tag: ', latest)
-    }
-
-    if (github.context.ref.startsWith(tagsPrefix)) {
-        validateRef()
-        validateTag()
-    }
-}
-
-main()
-
+init()
 })();
 
 module.exports = __webpack_exports__;

@@ -9,7 +9,7 @@ const GithubService = require('./github-service')
 async function init() {
 
     // loads inputs
-    const token = core.getInput('token')
+    const token = core.getInput('github_token')
     const defaultBranch = core.getInput('default_branch')
 
     // creates oktokit
