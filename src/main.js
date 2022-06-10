@@ -27,9 +27,9 @@ class Main {
         const branch = this.util.extractBranch(ref)
         if (branch === defaultBranch) {
             this._setVersionToUse('v0.0.1')
-            this._setCanPubishHelm(true)
+            this._setCanPublishHelm(true)
         } else {
-            this._setCanPubishHelm(false)
+            this._setCanPublishHelm(false)
         }
     }
 
@@ -57,7 +57,7 @@ class Main {
         core.setOutput('version_to_use', value)
     }
 
-    _setCanPubishHelm(value) {
+    _setCanPublishHelm(value) {
         core.setOutput('can_publish_helm', value)
     }
 }
