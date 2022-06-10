@@ -11796,7 +11796,9 @@ try {
 /***/ }),
 
 /***/ 9835:
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(4695)
 
 class GithubService {
     constructor({ oktokit }) {
@@ -11814,7 +11816,7 @@ class GithubService {
                 })
             return response.data.status === 'identical' || response.data.status === 'behind'
         } catch (err) {
-            console.log('[commitIsFromDefaultBranch]: Error while requesting compare endpoint: ', err)
+            core.error('[commitIsFromDefaultBranch]: Error while requesting compare endpoint: ', err)
             return false
         }
     }
@@ -11847,7 +11849,6 @@ class Main {
         const isTag = this.util.isTag(tag)
         
         if (isTag) {
-            console.log('is is is >>>')
             await this.tagHandler({ ref, repo, owner, defaultBranch, commitId })
         } else {
             this.branchHandler({ ref, defaultBranch })

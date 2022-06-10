@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1654840633029" clover="3.2.0">
-  <project timestamp="1654840633029" name="All files">
+<coverage generated="1654840761696" clover="3.2.0">
+  <project timestamp="1654840761696" name="All files">
     <metrics statements="62" coveredstatements="62" conditionals="16" coveredconditionals="16" methods="18" coveredmethods="18" elements="96" coveredelements="96" complexity="0" loc="62" ncloc="62" packages="1" files="4" classes="4"/>
     <file name="github-service.js" path="/home/ubuntu/workspace/labs/fmtok8s-ci/src/github-service.js">
-      <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
-      <line num="3" count="6" type="stmt"/>
-      <line num="7" count="4" type="stmt"/>
-      <line num="8" count="4" type="stmt"/>
-      <line num="15" count="3" type="cond" truecount="2" falsecount="0"/>
-      <line num="17" count="1" type="stmt"/>
-      <line num="18" count="1" type="stmt"/>
-      <line num="23" count="2" type="stmt"/>
+      <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <line num="1" count="2" type="stmt"/>
+      <line num="5" count="6" type="stmt"/>
+      <line num="9" count="4" type="stmt"/>
+      <line num="10" count="4" type="stmt"/>
+      <line num="17" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="19" count="1" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="25" count="2" type="stmt"/>
     </file>
     <file name="main.js" path="/home/ubuntu/workspace/labs/fmtok8s-ci/src/main.js">
-      <metrics statements="41" coveredstatements="41" conditionals="8" coveredconditionals="8" methods="10" coveredmethods="10"/>
+      <metrics statements="40" coveredstatements="40" conditionals="8" coveredconditionals="8" methods="10" coveredmethods="10"/>
       <line num="1" count="1" type="stmt"/>
       <line num="5" count="7" type="stmt"/>
       <line num="6" count="7" type="stmt"/>
@@ -26,35 +27,34 @@
       <line num="18" count="2" type="stmt"/>
       <line num="20" count="2" type="cond" truecount="2" falsecount="0"/>
       <line num="21" count="1" type="stmt"/>
-      <line num="22" count="1" type="stmt"/>
-      <line num="24" count="1" type="stmt"/>
-      <line num="29" count="3" type="stmt"/>
-      <line num="30" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="23" count="1" type="stmt"/>
+      <line num="28" count="3" type="stmt"/>
+      <line num="29" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="30" count="2" type="stmt"/>
       <line num="31" count="2" type="stmt"/>
       <line num="32" count="2" type="stmt"/>
-      <line num="33" count="2" type="stmt"/>
-      <line num="39" count="4" type="stmt"/>
-      <line num="41" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="38" count="4" type="stmt"/>
+      <line num="40" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="41" count="1" type="stmt"/>
       <line num="42" count="1" type="stmt"/>
-      <line num="43" count="1" type="stmt"/>
-      <line num="46" count="3" type="stmt"/>
-      <line num="53" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="45" count="3" type="stmt"/>
+      <line num="52" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="53" count="1" type="stmt"/>
       <line num="54" count="1" type="stmt"/>
-      <line num="55" count="1" type="stmt"/>
-      <line num="58" count="2" type="stmt"/>
+      <line num="57" count="2" type="stmt"/>
+      <line num="61" count="1" type="stmt"/>
       <line num="62" count="1" type="stmt"/>
-      <line num="63" count="1" type="stmt"/>
+      <line num="66" count="1" type="stmt"/>
       <line num="67" count="1" type="stmt"/>
-      <line num="68" count="1" type="stmt"/>
+      <line num="71" count="6" type="stmt"/>
       <line num="72" count="6" type="stmt"/>
-      <line num="73" count="6" type="stmt"/>
+      <line num="76" count="4" type="stmt"/>
       <line num="77" count="4" type="stmt"/>
-      <line num="78" count="4" type="stmt"/>
+      <line num="81" count="2" type="stmt"/>
       <line num="82" count="2" type="stmt"/>
-      <line num="83" count="2" type="stmt"/>
+      <line num="86" count="4" type="stmt"/>
       <line num="87" count="4" type="stmt"/>
-      <line num="88" count="4" type="stmt"/>
-      <line num="92" count="1" type="stmt"/>
+      <line num="91" count="1" type="stmt"/>
     </file>
     <file name="semver.js" path="/home/ubuntu/workspace/labs/fmtok8s-ci/src/semver.js">
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>

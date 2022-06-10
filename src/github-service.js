@@ -1,3 +1,5 @@
+const core = require('@actions/core')
+
 class GithubService {
     constructor({ oktokit }) {
         this.oktokit = oktokit
@@ -14,7 +16,7 @@ class GithubService {
                 })
             return response.data.status === 'identical' || response.data.status === 'behind'
         } catch (err) {
-            console.log('[commitIsFromDefaultBranch]: Error while requesting compare endpoint: ', err)
+            core.error('[commitIsFromDefaultBranch]: Error while requesting compare endpoint: ', err)
             return false
         }
     }

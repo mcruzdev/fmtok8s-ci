@@ -18,7 +18,6 @@ class Main {
         const isTag = this.util.isTag(tag)
         
         if (isTag) {
-            console.log('is is is >>>')
             await this.tagHandler({ ref, repo, owner, defaultBranch, commitId })
         } else {
             this.branchHandler({ ref, defaultBranch })
