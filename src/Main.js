@@ -6,7 +6,7 @@ class Main {
         this.util = util;
     }
 
-    exec(context) {
+    exec({ context, core }) {
         const ref = this.util.extractRef(context)
         const isValid = this.semver.isValid(ref)
         if (isValid) {
