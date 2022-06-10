@@ -11843,6 +11843,7 @@ class Main {
         this.setExecuteDockerPublish(true)
         this.setExecuteHelmPublish(true)
         this.setVersionToUse('v0.0.1')
+        this.setExecuteNativePublish(true)
 
         const isTag = this.util.isTag(ref)
         if (isTag) {
@@ -11856,6 +11857,8 @@ class Main {
         const branch = this.util.extractBranch(ref)
         if (branch !== defaultBranch) {
             this.setExecuteHelmPublish(false)
+            this.setVersionToUse(branch)
+            this.setExecuteNativePublish(false)
         }
     }
 
@@ -11896,6 +11899,11 @@ class Main {
     setExecuteDockerPublish(value) {
         console.log('Setting execute_docker_publish ', value)
         core.setOutput('execute_docker_publish', value)
+    }
+
+    setExecuteNativePublish(value) {
+        console.log('Setting execute_native_publish', value)
+        core.setOutput('execute_native_publish', value)
     }
 }
 
