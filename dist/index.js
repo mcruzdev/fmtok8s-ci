@@ -12004,6 +12004,15 @@ function validateBranch() {
     }
 }
 
+function isTagValid(tag){
+    try {
+        valid(tag.name)
+        return true
+    } catch (err) {
+        return false
+    }
+}
+
 async function getLatestTag() {
     const token = core.getInput('github_token')
     const oktokit = github.getOctokit(token)
@@ -12015,7 +12024,7 @@ async function getLatestTag() {
     })
 
     return tags.data
-        .filter(tag => valid(tag.name))
+        .filter(isTagValid)
         .reduce((a, b) => {
             return gt(a, b) ? a : b
         })

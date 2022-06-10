@@ -1,81 +1,16 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
-const { valid, gt } = require('semver')
 
-var regex = new RegExp('(0|[1-9]\d*)+\.(0|[1-9]\d*)+\.(0|[1-9]\d*)+(-(([a-z-][\da-z-]+|[\da-z-]+[a-z-][\da-z-]*|0|[1-9]\d*)(\.([a-z-][\da-z-]+|[\da-z-]+[a-z-][\da-z-]*|0|[1-9]\d*))*))?(\\+([\da-z-]+(\.[\da-z-]+)*))?$')
+const Semver = require('./Semver')
+const Util = require('./Util')
+const Main = require('./Main')
 
-const tagsPrefix = 'refs/tags/v'
-const headsPrefix = 'refs/heads/'
-const tagStart = 10
-const branchStart = 11
-const defaultBranch = core.getInput('default_branch')
-
-function validateRef() {
-    const { ref } = github.context
-    if (!ref.startsWith(tagsPrefix)) {
-        core.setFailed('[validateRef]: This action accepts only tag')
-    }
-}
-
-function validateTag() {
-    const { ref } = github.context
-    const tag = ref.substring(tagStart)
-    console.log('[validateTag]: tag ', tag)
-
-    if (!regex.exec(tag)) {
-        core.setFailed('[validateTag]: Invalid semver')
-    }
-}
-
-function validateBranch() {
-    const { ref } = github.context
-    const branchName = ref.substring(branchStart)
-
-    console.log('[validateBranch]: branch ', branchName)
-
-    if (branchName !== defaultBranch) {
-        core.setFailed('[validateBranch]: This action runs just on default branch')
-    }
-}
-
-function isTagValid(tag){
-    try {
-        valid(tag.name)
-        return true
-    } catch (err) {
-        return false
-    }
-}
-
-async function getLatestTag() {
-    const token = core.getInput('github_token')
-    const oktokit = github.getOctokit(token)
-
-    const tags = await oktokit.rest.repos.listTags({
-        repo: github.context.payload.repository.name,
-        per_page: 100,
-        owner: github.context.repo.owner,
+function init() {
+    const main = new Main({
+        semver: new Semver(),
+        util: new Util(),
     })
-
-    return tags.data
-        .filter(isTagValid)
-        .reduce((a, b) => {
-            return gt(a, b) ? a : b
-        })
+    main.exec({ context: github.context, core: core })
 }
 
-async function main() {
-
-    if (github.context.ref.startsWith(headsPrefix)) {
-        validateBranch()
-        const latest = await getLatestTag()
-        console.log('[main]: Latest tag: ', latest)
-    }
-
-    if (github.context.ref.startsWith(tagsPrefix)) {
-        validateRef()
-        validateTag()
-    }
-}
-
-main()
+init()
