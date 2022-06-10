@@ -11840,11 +11840,10 @@ class Main {
     }
 
     async exec({ ref, repo, owner, defaultBranch, commitId }) {
-        
-        const tag = this.util.extractTag(ref)
-        const isValid = this.semver.isValid(tag)
 
-        if (!isValid) {
+        const tag = this.util.extractTag(ref)
+
+        if (tag && !this.semver.isValid(tag)) {
             core.setFailed('[fmtok8s:CI] Invalid Semver')
         }
 
