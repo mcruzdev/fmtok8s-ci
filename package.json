@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "ncc build src/index.js --license licenses.txt"
+    "build": "ncc build src/index.js --license licenses.txt",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "semver": "^7.3.7"
   },
   "devDependencies": {
-    "jest": "^28.1.1"
+    "jest": "^28.1.1",
+    "husky": "^8.0.0"
   }
 }

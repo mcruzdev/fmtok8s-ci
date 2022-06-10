@@ -8,7 +8,7 @@ class Main {
         this.githubService = githubService
     }
 
-    async validateTag(tag) {
+    async validateTag({ tag, repo, owner, defaultBranch, commitId }) {
 
         if (!this.semver.isValid(tag)) {
             core.setFailed('[fmtok8s:CI] Invalid Semver')
@@ -31,7 +31,7 @@ class Main {
         const tag = this.util.extractTag(ref)
 
         if (tag) {
-            this.validateTag()
+            this.validateTag({ tag, repo, owner, defaultBranch, commitId })
         }
     }
 }
