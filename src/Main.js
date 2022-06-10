@@ -7,7 +7,7 @@ class Main {
     }
 
     exec({ context, core }) {
-        const ref = this.util.extractRef(context)
+        const ref = this.util.extractTag(context)
         const isValid = this.semver.isValid(ref)
         if (isValid) {
             core.setFailed('[fmtok8s:CI] Invalid Semver')
