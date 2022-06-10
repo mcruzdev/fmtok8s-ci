@@ -11841,14 +11841,14 @@ class Main {
     async exec({ ref, repo, owner, defaultBranch, commitId }) {
 
         // outputs (default)
-        this._setVersionToUse('v0.0.1')
+        this._setExecuteDockerPublish(true)
 
         const isTag = this.util.isTag(ref)
         // tag
         if (isTag) {
             const tag = this.util.extractTag(ref)
             await this._validateTag({ tag, repo, owner, defaultBranch, commitId })
-            this._setVersionToUse(tag)
+            this._versionToUse(tag)
         } else {
             this._validateBranch({ ref, defaultBranch })
         }
@@ -11857,10 +11857,10 @@ class Main {
     async _validateBranch({ ref, defaultBranch }) {
         const branch = this.util.extractBranch(ref)
         if (branch === defaultBranch) {
-            this._setVersionToUse('v0.0.1')
-            this._setCanPublishHelm(true)
+            this._versionToUse('v0.0.1')
+            this._executeHelmPublish(true)
         } else {
-            this._setCanPublishHelm(false)
+            this._executeHelmPublish(false)
         }
     }
 
@@ -11884,12 +11884,16 @@ class Main {
         }
     }
 
-    _setVersionToUse(value) {
+    _versionToUse(value) {
         core.setOutput('version_to_use', value)
     }
 
-    _setCanPublishHelm(value) {
-        core.setOutput('can_publish_helm', value)
+    _executeHelmPublish(value) {
+        core.setOutput('execute_helm_publish', value)
+    }
+
+    _setExecuteDockerPublish(value) {
+        core.setOutput('execute_docker_publish', value)
     }
 }
 

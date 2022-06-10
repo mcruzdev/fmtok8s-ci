@@ -9,12 +9,15 @@ inputs:
     description: 'Github token'
     required: true
 outputs:
-  can_publish_helm:
+  execute_helm_publish:
     description: |
       Shows if you can publish Helm charts. (boolean)
   version_to_use:
     description: |
       Is a correct semver value to uso on release process. (string)
+  execute_docker_publish:
+    description: |
+      Shows if you can execute publish processes. (boolean)
 runs:
   using: 'node16'
   main: 'dist/index.js'
