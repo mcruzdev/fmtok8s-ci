@@ -46,4 +46,25 @@ describe('Util', () => {
         // assert
         expect(tag).toBe('')
     })
+
+    test('Should return true if is a tag', () => {
+        // arrange
+        const util = new Util()
+        // act
+        const is = util.isTag('v0.1.1')
+
+        // assert
+        expect(is).toBe(true)
+    })
+
+    test('Should return false if is not a tag', () => {
+        // arrange
+        const util = new Util()
+
+        // act
+        const is = util.isTag('va.b.c-semver')
+
+        // assert
+        expect(is).toBe(false)
+    })
 })

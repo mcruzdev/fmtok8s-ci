@@ -11920,7 +11920,9 @@ module.exports = Semver
 /***/ }),
 
 /***/ 5291:
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const semver = __nccwpck_require__(5298)
 
 const REF_TAG_PREFIX = 'refs/tags/'
 const REF_BRANCH_PREFIX = 'refs/heads/'
@@ -11942,6 +11944,10 @@ class Util {
         } else {
             return ''
         }
+    }
+
+    isTag(tag) {
+        return !!semver.valid(tag)
     }
 }
 

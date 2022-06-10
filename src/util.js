@@ -1,3 +1,5 @@
+const semver = require("semver")
+
 const REF_TAG_PREFIX = 'refs/tags/'
 const REF_BRANCH_PREFIX = 'refs/heads/'
 
@@ -18,6 +20,10 @@ class Util {
         } else {
             return ''
         }
+    }
+
+    isTag(tag) {
+        return !!semver.valid(tag)
     }
 }
 
