@@ -8,7 +8,7 @@ class Main {
         this.githubService = githubService
     }
 
-    validateTag(tag) {
+    async validateTag(tag) {
 
         if (!this.semver.isValid(tag)) {
             core.setFailed('[fmtok8s:CI] Invalid Semver')
