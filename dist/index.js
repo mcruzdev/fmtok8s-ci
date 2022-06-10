@@ -11804,8 +11804,6 @@ class GithubService {
     }
 
     async commitIsFromDefaultBranch({ commitId, defaultBranch, owner, repo }) {
-        console.log(`[commitIsFromDefaultBranch]: commitId=${commitId}, defaultBranch=${defaultBranch}, owner=${owner}, repo=${repo}`)
-
         try {
             const response = await this.oktokit
                 .request(`GET /repos/{owner}/{repo}/compare/{base}...{head}`, {
@@ -11867,8 +11865,8 @@ class Main {
         const tag = this.util.extractTag(ref)
 
         if (!this.semver.isValid(tag)) {
-            core.setFailed('[fmtok8s:CI] Invalid Semver')
-            core.error('Error!')
+            this.addInvalidSemverError()
+            return
         }
 
         const isFromDefaultBranch = await this.githubService.commitIsFromDefaultBranch({
@@ -11879,30 +11877,40 @@ class Main {
         })
 
         if (!isFromDefaultBranch) {
-            core.setFailed(`[fmtok8s:CI] You can create a tag only from ${defaultBranch}`)
-            core.error('Error!')
+            this.addTagOutDefaultBranchError(defaultBranch)
+            return
         }
 
         this.setVersionToUse(tag)
     }
 
+    addInvalidSemverError() {
+        core.setFailed('[fmtok8s:CI] Invalid Semver')
+        core.error('Error!')
+    }
+
+    addTagOutDefaultBranchError(defaultBranch) {
+        core.setFailed(`[fmtok8s:CI] You can create a tag only from ${defaultBranch}`)
+        core.error('Error!')
+    }
+
     setVersionToUse(value) {
-        console.log('Setting version_to_use ', value)
+        core.info('Setting version_to_use ', value)
         core.setOutput('version_to_use', value)
     }
 
     setExecuteHelmPublish(value) {
-        console.log('Setting execute_helm_publish ', value)
+        core.info('Setting execute_helm_publish ', value)
         core.setOutput('execute_helm_publish', value)
     }
 
     setExecuteDockerPublish(value) {
-        console.log('Setting execute_docker_publish ', value)
+        core.info('Setting execute_docker_publish ', value)
         core.setOutput('execute_docker_publish', value)
     }
 
     setExecuteNativePublish(value) {
-        console.log('Setting execute_native_publish', value)
+        core.info('Setting execute_native_publish', value)
         core.setOutput('execute_native_publish', value)
     }
 }

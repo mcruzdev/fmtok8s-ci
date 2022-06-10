@@ -4,8 +4,6 @@ class GithubService {
     }
 
     async commitIsFromDefaultBranch({ commitId, defaultBranch, owner, repo }) {
-        console.log(`[commitIsFromDefaultBranch]: commitId=${commitId}, defaultBranch=${defaultBranch}, owner=${owner}, repo=${repo}`)
-
         try {
             const response = await this.oktokit
                 .request(`GET /repos/{owner}/{repo}/compare/{base}...{head}`, {
