@@ -11840,31 +11840,28 @@ class Main {
 
     async exec({ ref, repo, owner, defaultBranch, commitId }) {
 
-        // outputs (default)
-        this._setExecuteDockerPublish(true)
+        this.setExecuteDockerPublish(true)
+        this.setExecuteHelmPublish(true)
+        this.setVersionToUse('v0.0.1')
 
         const isTag = this.util.isTag(ref)
-        // tag
         if (isTag) {
-            const tag = this.util.extractTag(ref)
-            await this._validateTag({ tag, repo, owner, defaultBranch, commitId })
-            this._versionToUse(tag)
+            await this.tagHandler({ ref, repo, owner, defaultBranch, commitId })
         } else {
-            this._validateBranch({ ref, defaultBranch })
+            this.branchHandler({ ref, defaultBranch })
         }
     }
 
-    async _validateBranch({ ref, defaultBranch }) {
+    branchHandler({ ref, defaultBranch }) {
         const branch = this.util.extractBranch(ref)
-        if (branch === defaultBranch) {
-            this._versionToUse('v0.0.1')
-            this._executeHelmPublish(true)
-        } else {
-            this._executeHelmPublish(false)
+        if (branch !== defaultBranch) {
+            this.setExecuteHelmPublish(false)
         }
     }
 
-    async _validateTag({ tag, repo, owner, defaultBranch, commitId }) {
+    async tagHandler({ ref, repo, owner, defaultBranch, commitId }) {
+
+        const tag = this.util.extractTag(ref)
 
         if (!this.semver.isValid(tag)) {
             core.setFailed('[fmtok8s:CI] Invalid Semver')
@@ -11882,17 +11879,22 @@ class Main {
             core.setFailed(`[fmtok8s:CI] You can create a tag only from ${defaultBranch}`)
             core.error('Error!')
         }
+
+        this.setVersionToUse(tag)
     }
 
-    _versionToUse(value) {
+    setVersionToUse(value) {
+        console.log('Setting version_to_use ', value)
         core.setOutput('version_to_use', value)
     }
 
-    _executeHelmPublish(value) {
+    setExecuteHelmPublish(value) {
+        console.log('Setting execute_helm_publish ', value)
         core.setOutput('execute_helm_publish', value)
     }
 
-    _setExecuteDockerPublish(value) {
+    setExecuteDockerPublish(value) {
+        console.log('Setting execute_docker_publish ', value)
         core.setOutput('execute_docker_publish', value)
     }
 }
