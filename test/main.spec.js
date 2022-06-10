@@ -137,4 +137,55 @@ describe('Main', () => {
         expect(setVersionToUseSpy).toHaveBeenCalledWith('v1.1.1')
         expect(addTagOutDefaultBranchErrorSpy).toHaveBeenCalledTimes(0)
     })
+
+    test('exec: should set execute_docker_publish as true by default', async () => {
+        // arrange
+        const main = new Main({
+            util: new Util(),
+            githubService: new GithubService({
+                oktokit: {
+                    request: jest.fn().mockResolvedValue({
+                        data: { status: 'identical' }
+                    })
+                }
+            }),
+        })
+
+        const setExecuteDockerPublishSpy = jest.spyOn(main, "setExecuteDockerPublish")
+
+        // act
+        await main.exec({})
+
+        // assert
+        expect(setExecuteDockerPublishSpy).toHaveBeenCalledTimes(1)
+    })
+
+    test('exec: should handler tag when the ref is tag ', async () => {
+        // arrange
+        const main = new Main({
+            util: new Util(),
+            githubService: new GithubService({
+                oktokit: {
+                    request: jest.fn().mockResolvedValue({
+                        data: { status: 'identical' }
+                    })
+                }
+            }),
+            semver: new Semver()
+        })
+
+        const tagHandlerSpy = jest.spyOn(main, "tagHandler")
+
+        // act
+        await main.exec({
+            ref: 'refs/tags/v1.1.1',
+            commitId: 'abc',
+            defaultBranch: 'main',
+            owner: 'owner',
+            repo: 'repo'
+        })
+
+        // assert
+        expect(tagHandlerSpy).toHaveBeenCalledTimes(1)
+    })
 })

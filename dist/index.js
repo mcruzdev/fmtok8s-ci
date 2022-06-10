@@ -11843,8 +11843,11 @@ class Main {
         this.setVersionToUse('v0.0.1')
         this.setExecuteNativePublish(true)
 
-        const isTag = this.util.isTag(ref)
+        const tag = this.util.extractTag(ref)
+        const isTag = this.util.isTag(tag)
+        
         if (isTag) {
+            console.log('is is is >>>')
             await this.tagHandler({ ref, repo, owner, defaultBranch, commitId })
         } else {
             this.branchHandler({ ref, defaultBranch })

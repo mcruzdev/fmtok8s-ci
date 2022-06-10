@@ -6,7 +6,7 @@ describe('GithubService', () => {
         // arrange
         const githubService = new GithubService({
             oktokit: {
-                request: jest.fn().mockImplementation(() => { throw new Error() })
+                request: jest.fn().mockImplementation(() => { throw new Error('>>>error<<<') })
             }
         })
         // act
