@@ -1,4 +1,4 @@
-const Util = require("../src/Util");
+const Util = require("../src/util");
 
 describe('Util', () => {
     test('Should return a valid tag from ref', () => {

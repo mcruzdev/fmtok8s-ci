@@ -1,4 +1,4 @@
-const Semver = require("../src/Semver");
+const Semver = require("../src/semver");
 
 describe('Semver', () => {
     test('When tag is valid should return true', () => {
