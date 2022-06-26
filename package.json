@@ -2,11 +2,14 @@
   "name": "fmtok8s-ci",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "jest --coverage=true",
-    "build": "ncc build src/index.js --license licenses.txt",
-    "prepare": "husky install"
+    "package": "ncc build src/index.js --license licenses.txt",
+    "build": "tsc",
+    "prepare": "husky install",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +20,17 @@
     "semver": "^7.3.7"
   },
   "devDependencies": {
+    "@types/node": "^16.10.5",
+    "@types/semver": "^7.3.10",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "@vercel/ncc": "^0.31.1",
+    "eslint": "^8.18.0",
+    "eslint-config-google": "^0.14.0",
+    "husky": "^8.0.0",
     "jest": "^28.1.1",
-    "husky": "^8.0.0"
+    "prettier": "2.5.1",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.4.4"
   }
 }
